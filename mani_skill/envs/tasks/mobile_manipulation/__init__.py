@@ -1,2 +1,7 @@
-from .open_cabinet_drawer import OpenCabinetDoorEnv, OpenCabinetDrawerEnv
+from .open_refrigerator import OpenRefrigeratorEnv
+from .put_cube_into_drawer import PutCubeIntoDrawerEnv
+from .put_duck_into_drawer import PutDuckIntoDrawerEnv
+from .put_pyramid_into_drawer import PutPyramidIntoDrawerEnv
+from .put_apple_into_refrigerator import PutAppleIntoRefrigeratorEnv
+from .put_cube_into_refrigerator import PutCubeIntoRefrigeratorEnv
 from .robocasa import *

@@ -205,6 +205,7 @@ class BaseEnv(gym.Env):
         parallel_in_single_scene: bool = False,
 
         enhanced_determinism: bool = False,
+        mixed_state: bool = False
     ):
         self._enhanced_determinism = enhanced_determinism
 
@@ -307,6 +308,7 @@ class BaseEnv(gym.Env):
             else:
                 raise NotImplementedError(f"Unsupported obs mode: {obs_mode}. Must be one of {self.SUPPORTED_OBS_MODES}")
         self._obs_mode = obs_mode
+        self._mixed_state = mixed_state
         self._visual_obs_mode_struct = parse_visual_obs_mode_to_struct(self._obs_mode)
 
         # Reward mode
@@ -1056,7 +1058,7 @@ class BaseEnv(gym.Env):
         return info
 
     def _before_control_step(self):
-        """Code that runs before each action has been taken via env.step(action).
+        """Code that runs before each action has been taken.
         On GPU simulation this is called before observations are fetched from the GPU buffers."""
     def _after_control_step(self):
         """Code that runs after each action has been taken.

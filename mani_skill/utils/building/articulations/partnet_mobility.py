@@ -18,14 +18,14 @@ def _load_partnet_mobility_dataset():
             PACKAGE_ASSET_DIR / "partnet_mobility/meta/info_cabinet_drawer_train.json"
         ),
     }
-    for data_file in ["info_cabinet_door_train.json", "info_faucet_train.json"]:
+    for data_file in ["info_cabinet_door_train.json", "info_faucet_train.json", "info_refrigerator_train.json"]:
         PARTNET_MOBILITY["model_data"].update(
             load_json(PACKAGE_ASSET_DIR / "partnet_mobility/meta" / data_file)
         )
 
     def find_urdf_path(model_id):
         model_dir = ASSET_DIR / "partnet_mobility/dataset" / str(model_id)
-        urdf_names = ["mobility_cvx.urdf", "mobility_fixed.urdf"]
+        urdf_names = ["mobility_cvx.urdf", "mobility_fixed.urdf", "mobility.urdf"]
         for urdf_name in urdf_names:
             urdf_path = model_dir / urdf_name
             if urdf_path.exists():
@@ -34,6 +34,7 @@ def _load_partnet_mobility_dataset():
     PARTNET_MOBILITY["model_urdf_paths"] = {}
     for k in PARTNET_MOBILITY["model_data"].keys():
         urdf_path = find_urdf_path(k)
+        #print('Urdf:', k, urdf_path)
         if urdf_path is not None:
             PARTNET_MOBILITY["model_urdf_paths"][k] = urdf_path
 

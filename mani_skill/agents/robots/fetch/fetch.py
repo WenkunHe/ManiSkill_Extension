@@ -439,3 +439,55 @@ class Fetch(BaseAgent):
         p = (self.finger1_link.pose.p + self.finger2_link.pose.p) / 2
         q = (self.finger1_link.pose.q + self.finger2_link.pose.q) / 2
         return Pose.create_from_pq(p=p, q=q)
+    
+    def _get_finger_dist(self):
+        return torch.linalg.norm(
+            self.finger1_link.pose.p - self.finger2_link.pose.p, axis=1
+        )
+    
+    def is_released(self):
+        return self._get_finger_dist() >= 0.072
+
+    def _is_released(self, object: Actor, min_force=0.01, max_angle=85):
+        """Check if the robot is grasping an object
+
+        Args:
+            object (Actor): The object to check if the robot is grasping
+            min_force (float, optional): Minimum force before the robot is considered to be grasping the object in Newtons. Defaults to 0.5.
+            max_angle (int, optional): Maximum angle of contact to consider grasping. Defaults to 85.
+        """
+        l_contact_forces = self.scene.get_pairwise_contact_forces(
+            self.finger1_link, object
+        )
+        r_contact_forces = self.scene.get_pairwise_contact_forces(
+            self.finger2_link, object
+        )
+        lforce = torch.linalg.norm(l_contact_forces, axis=1)
+        rforce = torch.linalg.norm(r_contact_forces, axis=1)
+
+        # direction to open the gripper
+        ldirection = -self.finger1_link.pose.to_transformation_matrix()[..., :3, 1]
+        rdirection = self.finger2_link.pose.to_transformation_matrix()[..., :3, 1]
+        langle = common.compute_angle_between(ldirection, l_contact_forces)
+        rangle = common.compute_angle_between(rdirection, r_contact_forces)
+        lflag = lforce <= min_force
+        rflag = rforce <= min_force
+        return torch.logical_and(lflag, rflag)
+    
+    def _get_finger_force(self, object: Actor, min_force=0.01, max_angle=85):
+        """Check if the robot is grasping an object
+
+        Args:
+            object (Actor): The object to check if the robot is grasping
+            min_force (float, optional): Minimum force before the robot is considered to be grasping the object in Newtons. Defaults to 0.5.
+            max_angle (int, optional): Maximum angle of contact to consider grasping. Defaults to 85.
+        """
+        l_contact_forces = self.scene.get_pairwise_contact_forces(
+            self.finger1_link, object
+        )
+        r_contact_forces = self.scene.get_pairwise_contact_forces(
+            self.finger2_link, object
+        )
+        lforce = torch.linalg.norm(l_contact_forces, axis=1)
+        rforce = torch.linalg.norm(r_contact_forces, axis=1)
+        return lforce, rforce
