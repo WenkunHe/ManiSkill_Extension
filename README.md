@@ -14,10 +14,10 @@ python ./ppo_mixed.py --model_type=student --teacher_path=[teacher_checkpoint_pa
 Put data in the ``data`` folder into ``~/``
 ```bash
 cd ./examples/baselines/ppo/
-python ./ppo_task.py --env_id=[MobilePutDuckIntoDrawer-v1/MobilePutDuckIntoDrawer-v1/MobilePutDuckIntoDrawer-v1/OpenRefrigerator-v1/MobilePutAppleIntoRefrigerator-v1/MobilePutCubeIntoRefrigerator-v1]
+python ./ppo_task.py --env_id=[MobilePutCubeIntoDrawer-v1/MobilePutDuckIntoDrawer-v1/MobilePutPyramidIntoDrawer-v1/OpenRefrigerator-v1/MobilePutAppleIntoRefrigerator-v1/MobilePutCubeIntoRefrigerator-v1]
 ```
 
 ```bash
 cd ./examples/baselines/sac/
-python ./sac_task.py --env_id=[MobilePutDuckIntoDrawer-v1/MobilePutDuckIntoDrawer-v1/MobilePutDuckIntoDrawer-v1/OpenRefrigerator-v1/MobilePutAppleIntoRefrigerator-v1/MobilePutCubeIntoRefrigerator-v1]
+python ./sac_task.py --env_id=[MobilePutCubeIntoDrawer-v1/MobilePutDuckIntoDrawer-v1/MobilePutPyramidIntoDrawer-v1/OpenRefrigerator-v1/MobilePutAppleIntoRefrigerator-v1/MobilePutCubeIntoRefrigerator-v1]
 ```
