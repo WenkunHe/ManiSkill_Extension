@@ -1,6 +1,14 @@
 # ManiSkill++: Some Extensions for ManiSkill
 
 ## Section 4.1: BC+PPO Finetuning
+To get started, we recommend using conda/mamba to create a new environment and install the dependencies
+
+```shell
+cd ./examples/baselines/bc/
+conda create -n behavior-cloning-ms python=3.9
+conda activate behavior-cloning-ms
+pip install -e .
+```
 
 First download and replay the demonstrations:
 
